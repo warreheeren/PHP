@@ -2,11 +2,6 @@
 
 $errors = [];
 $input = [
-    'grootte' => '',
-    'bodem' => '',
-    'korst' => '',
-    'saus' => '',
-    'toppings' => [],
     'pikant' => '',
     'naam' => '',
     'straat' => '',
@@ -16,16 +11,26 @@ $input = [
 ];
 
 $toppings = [
-   "kaas" => [
-    "naam" => ["Feta", "Geraspte kaas", "Mozzarella", "Gorgonzola"]
-   ],
-   "vlees" => [
-    "naam" => ["Kip (€2)", 'Kebab(€2)', "Salami(€2)", "Tonijn(€2)", "Zalm(€2)"]
-   ],
-   "extra" => [
-    "naam" => ["Olijven(€1)", "Pepers(€1)", "Champignons(€1)","Ajuin(€1)"]
-   ]
+   "adress" => ["Feta", "Geraspte kaas", "Mozzarella", "Gorgonzola"],
+   "Vlees" => ["Kip (€2)", 'Kebab(€2)', "Salami(€2)", "Tonijn(€2)", "Zalm(€2)"],
+   "Extra" => ["Olijven(€1)", "Pepers(€1)", "Champignons(€1)","Ajuin(€1)"]
 ];
+$gekozenToppings = [];
+
+$korst = ["normaal", "cheesy"];
+$gekozenKorst=[];
+
+$grootte = ["Small", "Medium", "Large", "Extra large"];
+$gekozenGrootte=[];
+
+$bodem = ["Dik", "Dun"];
+$gekozenBodem=[];
+
+$saus = ["Rode saus", "Witte saus"];
+$gekozenSaus=[];
+
+
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $input['email'] = htmlspecialchars(addslashes(trim($_POST['email'])));
@@ -33,30 +38,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input['straat'] = htmlspecialchars(addslashes(trim($_POST['straat'])));
     $input['naam'] = htmlspecialchars(addslashes(trim($_POST['naam'])));
     $input['tel'] = htmlspecialchars(addslashes(trim($_POST['tel'])));
-    $input['korst'] = isset($_POST['korst']) ? $_POST['korst'] : '' ;  
-    $input['bodem'] = isset($_POST['bodem']) ? $_POST['bodem'] : '';
-    $input['grootte'] = isset($_POST['grootte']) ? $_POST['grootte'] : '';
-    $input['saus'] = isset($_POST['saus']) ? $_POST['saus'] : '';
-    $toppings = isset($_POST['toppings']) ? $_POST['toppings'] : [];
+    $gekozenKorst = isset($_POST['korst']) ? $_POST['korst'] : '' ;  
+    $gekozenBodem = isset($_POST['bodem']) ? $_POST['bodem'] : '';
+    $gekozenGrootte = isset($_POST['grootte']) ? $_POST['grootte'] : '';
+    $gekozenSaus = isset($_POST['saus']) ? $_POST['saus'] : '';
+    $gekozenToppings = isset($_POST['toppings']) ? $_POST['toppings'] : [];
     $input['pikant'] = $_POST['pikant'];
  
-    if (empty($input['grootte'])) {
+    if (empty($gekozenGrootte)) {
         $errors['grootte'] = 'Grootte is verplicht.';
     } 
 
-    if (empty($input['bodem'])) {
+    if (empty($gekozenBodem)) {
         $errors['bodem'] = 'Bodem is verplicht.';
     }
 
-    if (empty($input['korst'])) {
+    if (empty($gekozenKorst)) {
         $errors['korst'] = 'Korst is verplicht.';
     } 
 
-    if (empty($input['saus'])) {
+    if (empty($gekozenSaus)) {
         $errors['saus'] = 'Saus is verplicht.';
     }
 
-    if (empty($toppings) || count($toppings) < 2 || count($toppings) > 5) {
+    if (empty($gekozenToppings) || count($gekozenToppings) < 2 || count($gekozenToppings) > 5) {
         $errors['toppings'] = 'Kies minstens 2 en maximaal 5 toppings.';
     }
 
@@ -118,14 +123,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label>
                         <span class="label">Grootte:</span>
                         <select name="grootte" id="">
-                            <option value="s" <?= $input['grootte'] === 's' ? 'selected' : '' ?>>Small (€5 - 10cm)
+                            <?php foreach($grootte as $g): ?>
+                            <option value="<?= $g ?>" <?= $g === $gekozenGrootte ? 'selected' : '' ?>>
+                                <?=$g?>
                             </option>
-                            <option value="m" <?= $input['grootte'] === 'm' ? 'selected' : '' ?>>Medium (€7 - 15cm)
-                            </option>
-                            <option value="l" <?= $input['grootte'] === 'l' ? 'selected' : '' ?>>Large (€10 - 20cm)
-                            </option>
-                            <option value="xl" <?= $input['grootte'] === 'xl' ? 'selected' : '' ?>>Xtra Large (€15 -
-                                30cm)</option>
+                            <?php endforeach ?>
                         </select>
                     </label>
                     <?php if (isset($errors['grootte'])): ?>
@@ -136,9 +138,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label>
                         <span class="label">Bodem:</span>
                         <select name="bodem" id="">
-                            <option disabled selected>Maak een keuze</option>
-                            <option value="dik" <?= $input['bodem'] === 'dik' ? 'selected' : '' ?>>Dik</option>
-                            <option value="dun" <?= $input['bodem'] === 'dun' ? 'selected' : '' ?>>Dun</option>
+                            <?php foreach($bodem as $b): ?>
+                            <option value="<?= $b ?>" <?= $b === $gekozenBodem ? 'selected' : '' ?>>
+                                <?=$b?>
+                            </option>
+                            <?php endforeach ?>
                         </select>
                     </label>
                     <?php if (isset($errors['bodem'])): ?>
@@ -149,11 +153,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <label>
                         <span class="label">Korst:</span>
                         <select name="korst" id="korst">
-                            <option disabled selected>Maak een keuze</option>
-                            <option value="normaal" <?= $input['korst'] === 'normaal' ? 'selected' : '' ?>>Normaal
+                            <?php foreach($korst as $k): ?>
+                            <option value="<?= $k ?>" <?= $k === $gekozenKorst ? 'selected' : '' ?>>
+                                <?=$k?>
                             </option>
-                            <option value="cheesy" <?= $input['korst'] === 'cheesy' ? 'selected' : '' ?>>Cheesy (€2)
-                            </option>
+                            <?php endforeach ?>
                         </select>
                     </label>
                     <?php if (isset($errors['korst'])): ?>
@@ -162,14 +166,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 </div>
                 <div class="<?= isset($errors['saus']) ? 'has_error' : '' ?>">
                     <span class="label">Saus:</span>
+                    <?php foreach($saus as $s): ?>
                     <label>
-                        <input type="radio" name="saus" value="rood"
-                            <?= $input['saus'] === 'rood' ? 'checked' : '' ?>>Rode saus
+                        <input type="radio" name="saus" value="<?= $s ?>" <?= $s === $gekozenSaus ? 'checked' : '' ?>>
+                        <?=$s?>
                     </label>
-                    <label>
-                        <input type="radio" name="saus" value="wit"
-                            <?= $input['saus'] === 'wit' ? 'checked' : '' ?>>Witte saus
-                    </label>
+                    <?php endforeach ?>
                     <?php if (isset($errors['saus'])): ?>
                     <span class="error"><?= $errors['saus'] ?></span>
                     <?php endif; ?>
@@ -177,14 +179,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </fieldset>
             <fieldset class="<?= isset($errors['toppings']) ? 'has_error' : '' ?>">
                 <legend>Toppings</legend>
-                <?php for($i = 0; $i < count($toppings); $i++): ?>
-                <?php foreach($toppings[$i] as $topping) :?>
+                <?php foreach($toppings as $topping =>$items): ?>
+                <h3><?= $topping ?></h3>
+                <?php foreach($items as $item) :?>
                 <div>
-                    <input <?= in_array($topping['name'], $toppings) ? 'checked' : '' ?> value="<?= $topping['name']?>"
-                        type="checkbox" name="toppings[]">
+                    <label>
+                        <input <?= in_array($item, $gekozenToppings) ? 'checked' : '' ?> value="<?= $item?>"
+                            type="checkbox" name="toppings[]"> <?= $item ?>
+                    </label>
                 </div>
                 <?php endforeach ?>
-                <?php endfor ?>
+                <?php endforeach ?>
                 <?php if (isset($errors['toppings'])): ?>
                 <span class="error"><?= $errors['toppings'] ?></span>
                 <?php endif; ?>
