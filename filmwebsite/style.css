@@ -1,0 +1,216 @@
+* {
+  box-sizing: border-box;
+}
+
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+body {
+  color: rgb(27, 27, 27);
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+h1:first-of-type {
+  margin-top: 0;
+}
+
+p:first-of-type {
+  margin-top: 0;
+}
+
+.page-intro {
+  background: black;
+  padding: 10px 0;
+  color: white;
+}
+
+.page-intro p {
+  margin-bottom: 0;
+  margin-top: 0;
+  font-size: larger;
+}
+
+.main-header {
+  background: rgb(207, 16, 16);
+  color: rgb(255, 255, 255);
+  padding: 50px 0;
+}
+
+.movie-title {
+  margin-top: 0;
+  font-size: xxx-large;
+  text-shadow: 0 5px 0 rgb(107, 4, 4);
+}
+
+.movie-synopsis {
+  color:rgb(255, 168, 168);
+  margin: 0;
+  font-size: larger;
+}
+
+.movie-poster {
+  float: right;
+  margin-left: 20px;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  position: relative;
+}
+
+.tag-list {
+  margin-top: 50px;
+}
+
+.tag {
+  display: inline-block;
+  background:rgb(235, 84, 84);
+  padding: 5px 10px;
+  color: rgb(110, 8, 8);
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: smaller;
+  transition: all 250ms;
+}
+
+.tag:hover {
+  background:rgb(247, 205, 205);
+}
+
+.main-content {
+  padding: 50px 0;
+}
+
+.content {
+  width: 70%;
+  float: left;
+  padding-right: 40px;
+}
+
+.reviews {
+  width: 30%;
+  float: right;
+}
+
+.review {
+  background-color: rgb(250, 250, 250);
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.review-header {
+  margin-bottom: 10px;
+}
+
+.review-header a {
+  color:rgb(207, 16, 16)
+}
+
+.review-score {
+  margin-top: 10px;
+  font-size: larger;
+  font-weight: bold;
+  padding-top: 10px;
+  border-top: 1px solid rgb(223, 223, 223);
+}
+
+.review-title,
+.review-author,
+.review-date {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.review-author,
+.review-date {
+  font-size: smaller;
+  color: dimgray;
+}
+
+.review-content :first-child {
+  margin-top: 0;
+}
+.review-content :last-child {
+  margin-bottom: 0;
+}
+
+.score {
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.score .star {
+  float: left;
+  background: rgb(243, 227, 9);
+}
+
+.review .score {
+  margin-bottom: 0;
+}
+
+.review .star {
+  width: 20px;
+  height: 20px;
+}
+
+.star {
+  background: rgb(238, 222, 6);
+  clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  width: 50px;
+  height: 50px;
+  box-shadow: 0 5px 0 blue;
+}
+
+.directors, 
+.actors {
+  padding: 5px;
+  background:rgb(233, 233, 233);
+  margin-bottom: 20px;
+}
+
+.directors p {
+  margin: 0;
+}
+
+.recommended {
+  background: rgb(69, 125, 230);
+  color:rgb(225, 231, 241);
+  padding: 10px;
+  font-size: larger;
+  margin-bottom: 20px;
+  display: inline-block;
+  transform: rotate(-2deg);
+  position: absolute;
+  bottom: 100%;
+}
+
+.main-footer {
+  background: black;
+  padding: 10px 0;
+  text-align: center;
+  color: white;
+  font-size: smaller;
+}
+
+.actors-table {
+  width: 100%;
+}
+
+.actors-table td {
+  padding: 5px;
+}
+
+.actors-table .actors-table-actor {
+  font-weight: bold;
+  border-bottom: 1px dotted rgba(0,0,0,1);
+}
+.actors-table .actors-table-character {
+  border-bottom: 1px solid rgba(0,0,0,.25);
+  font-style: italic;
+}
