@@ -14,6 +14,18 @@ $input = [
     'email' => '',
     'tel' => '',
 ];
+
+$toppings = [
+   "kaas" => [
+    "naam" => ["Feta", "Geraspte kaas", "Mozzarella", "Gorgonzola"]
+   ],
+   "vlees" => [
+    "naam" => ["Kip (€2)", 'Kebab(€2)', "Salami(€2)", "Tonijn(€2)", "Zalm(€2)"]
+   ],
+   "extra" => [
+    "naam" => ["Olijven(€1)", "Pepers(€1)", "Champignons(€1)","Ajuin(€1)"]
+   ]
+];
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $input['email'] = htmlspecialchars(addslashes(trim($_POST['email'])));
@@ -25,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $input['bodem'] = isset($_POST['bodem']) ? $_POST['bodem'] : '';
     $input['grootte'] = isset($_POST['grootte']) ? $_POST['grootte'] : '';
     $input['saus'] = isset($_POST['saus']) ? $_POST['saus'] : '';
-    $input['toppings'] = isset($_POST['toppings']) ? $_POST['toppings'] : [];
+    $toppings = isset($_POST['toppings']) ? $_POST['toppings'] : [];
     $input['pikant'] = $_POST['pikant'];
  
     if (empty($input['grootte'])) {
@@ -44,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['saus'] = 'Saus is verplicht.';
     }
 
-    if (empty($input['toppings']) || count($input['toppings']) < 2 || count($input['toppings']) > 5) {
+    if (empty($toppings) || count($toppings) < 2 || count($toppings) > 5) {
         $errors['toppings'] = 'Kies minstens 2 en maximaal 5 toppings.';
     }
 
@@ -80,6 +92,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -87,34 +100,41 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Pizza bestellen</title>
     <link rel="stylesheet" href="pizza-bestellen.css">
 </head>
+
 <body>
 
     <div class="container">
         <header>
             <h1>Stel je eigen pizza samen</h1>
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat cupiditate iure vero, soluta ipsum voluptate non aliquid dicta voluptatem eum?</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quaerat cupiditate iure vero, soluta ipsum
+                voluptate non aliquid dicta voluptatem eum?</p>
         </header>
         <pre><?php print_r($_POST) ?></pre>
         <form method="POST" action="">
-            <fieldset class="<?= isset($errors['grootte']) || isset($errors['bodem']) || isset($errors) ? 'has_error' : '' ?>">
+            <fieldset
+                class="<?= isset($errors['grootte']) || isset($errors['bodem']) || isset($errors) ? 'has_error' : '' ?>">
                 <legend>Basis</legend>
                 <div class="<?= isset($errors['grootte']) ? 'has_error' : '' ?>">
                     <label>
-                        <span class="label">Grootte:</span> 
+                        <span class="label">Grootte:</span>
                         <select name="grootte" id="">
-                            <option value="s" <?= $input['grootte'] === 's' ? 'selected' : '' ?>>Small (€5 - 10cm)</option>
-                            <option value="m" <?= $input['grootte'] === 'm' ? 'selected' : '' ?>>Medium (€7 - 15cm)</option>
-                            <option value="l" <?= $input['grootte'] === 'l' ? 'selected' : '' ?>>Large (€10 - 20cm)</option>
-                            <option value="xl" <?= $input['grootte'] === 'xl' ? 'selected' : '' ?>>Xtra Large (€15 - 30cm)</option>
+                            <option value="s" <?= $input['grootte'] === 's' ? 'selected' : '' ?>>Small (€5 - 10cm)
+                            </option>
+                            <option value="m" <?= $input['grootte'] === 'm' ? 'selected' : '' ?>>Medium (€7 - 15cm)
+                            </option>
+                            <option value="l" <?= $input['grootte'] === 'l' ? 'selected' : '' ?>>Large (€10 - 20cm)
+                            </option>
+                            <option value="xl" <?= $input['grootte'] === 'xl' ? 'selected' : '' ?>>Xtra Large (€15 -
+                                30cm)</option>
                         </select>
                     </label>
                     <?php if (isset($errors['grootte'])): ?>
-                        <span class="error"><?= $errors['grootte'] ?></span>
+                    <span class="error"><?= $errors['grootte'] ?></span>
                     <?php endif; ?>
                 </div>
                 <div class="<?= isset($errors['bodem']) ? 'has_error' : '' ?>">
                     <label>
-                        <span class="label">Bodem:</span> 
+                        <span class="label">Bodem:</span>
                         <select name="bodem" id="">
                             <option disabled selected>Maak een keuze</option>
                             <option value="dik" <?= $input['bodem'] === 'dik' ? 'selected' : '' ?>>Dik</option>
@@ -122,108 +142,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </select>
                     </label>
                     <?php if (isset($errors['bodem'])): ?>
-                        <span class="error"><?= $errors['bodem'] ?></span>
+                    <span class="error"><?= $errors['bodem'] ?></span>
                     <?php endif; ?>
                 </div>
                 <div class="<?= isset($errors['korst']) ? 'has_error' : '' ?>">
                     <label>
-                        <span class="label">Korst:</span> 
+                        <span class="label">Korst:</span>
                         <select name="korst" id="korst">
                             <option disabled selected>Maak een keuze</option>
-                            <option value="normaal" <?= $input['korst'] === 'normaal' ? 'selected' : '' ?>>Normaal</option>
-                            <option value="cheesy" <?= $input['korst'] === 'cheesy' ? 'selected' : '' ?>>Cheesy (€2)</option>
+                            <option value="normaal" <?= $input['korst'] === 'normaal' ? 'selected' : '' ?>>Normaal
+                            </option>
+                            <option value="cheesy" <?= $input['korst'] === 'cheesy' ? 'selected' : '' ?>>Cheesy (€2)
+                            </option>
                         </select>
                     </label>
                     <?php if (isset($errors['korst'])): ?>
-                        <span class="error"><?= $errors['korst'] ?></span>
+                    <span class="error"><?= $errors['korst'] ?></span>
                     <?php endif; ?>
                 </div>
                 <div class="<?= isset($errors['saus']) ? 'has_error' : '' ?>">
                     <span class="label">Saus:</span>
                     <label>
-                        <input type="radio" name="saus" value="rood" <?= $input['saus'] === 'rood' ? 'checked' : '' ?>>Rode saus
+                        <input type="radio" name="saus" value="rood"
+                            <?= $input['saus'] === 'rood' ? 'checked' : '' ?>>Rode saus
                     </label>
                     <label>
-                        <input type="radio" name="saus" value="wit" <?= $input['saus'] === 'wit' ? 'checked' : '' ?>>Witte saus
+                        <input type="radio" name="saus" value="wit"
+                            <?= $input['saus'] === 'wit' ? 'checked' : '' ?>>Witte saus
                     </label>
                     <?php if (isset($errors['saus'])): ?>
-                        <span class="error"><?= $errors['saus'] ?></span>
+                    <span class="error"><?= $errors['saus'] ?></span>
                     <?php endif; ?>
                 </div>
             </fieldset>
-            <fieldset  class="<?= isset($errors['toppings']) ? 'has_error' : '' ?>">
+            <fieldset class="<?= isset($errors['toppings']) ? 'has_error' : '' ?>">
                 <legend>Toppings</legend>
+                <?php for($i = 0; $i < count($toppings); $i++): ?>
+                <?php foreach($toppings[$i] as $topping) :?>
                 <div>
-                    <p class="label">Kaas</p>
-                    <label><input type="checkbox" name="toppings[]" value="gerasptekaas" <?= in_array('gerasptekaas', $input['toppings']) ? 'checked' : '' ?>> Geraspte kaas</label>
-                    <label><input type="checkbox" name="toppings[]" value="mozzarella" <?= in_array('mozzarella', $input['toppings']) ? 'checked' : '' ?>> Mozzarella</label>
-                    <label><input type="checkbox" name="toppings[]" value="feta" <?= in_array('feta', $input['toppings']) ? 'checked' : '' ?>> Feta</label>
-                    <label><input type="checkbox" name="toppings[]" value="gorgonzola" <?= in_array('gorgonzola', $input['toppings']) ? 'checked' : '' ?>> Gorgonzola</label>
+                    <input <?= in_array($topping['name'], $toppings) ? 'checked' : '' ?> value="<?= $topping['name']?>"
+                        type="checkbox" name="toppings[]">
                 </div>
-                <div>
-                    <p class="label">Vlees & Vis</p>
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="toppings[]" value="kip" <?= in_array('kip', $input['toppings']) ? 'checked' : '' ?>> Kip  (€2)
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                            <input type="checkbox" name="toppings[]" value="salami" <?= in_array('salami', $input['toppings']) ? 'checked' : '' ?>> Salami (€2)
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                            <input type="checkbox" name="toppings[]" value="kebab" <?= in_array('kebab', $input['toppings']) ? 'checked' : '' ?>> Kebab  (€2)
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                            <input type="checkbox" name="toppings[]" value="tonijn" <?= in_array('tonijn', $input['toppings']) ? 'checked' : '' ?>> Tonijn  (€2)
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                            <input type="checkbox" name="toppings[]" value="zalm" <?= in_array('zalm', $input['toppings']) ? 'checked' : '' ?>> Zalm  (€2)
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-                <div>
-                    <p class="label">Extra</p>
-                    <ul>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="toppings[]" value="olijven" <?= in_array('olijven', $input['toppings']) ? 'checked' : '' ?>> Olijven  (€1)
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="toppings[]" value="pepers" <?= in_array('pepers', $input['toppings']) ? 'checked' : '' ?>> Pepers  (€1)
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                                <input type="checkbox" name="toppings[]" value="champignons" <?= in_array('champignons', $input['toppings']) ? 'checked' : '' ?>> Champignons  (€1)
-                            </label>
-                        </li>
-                        <li>
-                            <label>
-                            <input type="checkbox" name="toppings[]" value="ajuin" <?= in_array('ajuin', $input['toppings']) ? 'checked' : '' ?>> Ajuin  (€1)
-                            </label>
-                        </li>
-                    </ul>
-                </div>
+                <?php endforeach ?>
+                <?php endfor ?>
                 <?php if (isset($errors['toppings'])): ?>
-                    <span class="error"><?= $errors['toppings'] ?></span>
+                <span class="error"><?= $errors['toppings'] ?></span>
                 <?php endif; ?>
             </fieldset>
-            <fieldset  class="<?= isset($errors['pikant']) ? 'has_error' : '' ?>">
+            <fieldset class="<?= isset($errors['pikant']) ? 'has_error' : '' ?>">
                 <legend>Pikant</legend>
-                <div>                        
+                <div>
                     <div class="pikant">
-                        <input type="range" name="pikant" min="0" max="10"  value="<?= $input['pikant']?>">
+                        <input type="range" name="pikant" min="0" max="10" value="<?= $input['pikant']?>">
                         <div>
                             <span>Niet pikant</span>
                             <span>Heel pikant</span>
@@ -231,42 +201,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
             </fieldset>
-            <fieldset class="<?= isset($errors['naam']) || isset($errors['straat']) || isset($errors['email']) || isset($errors['gemeente']) || isset($errors['tel']) || isset($errors) ? 'has_error' : '' ?>">
+            <fieldset
+                class="<?= isset($errors['naam']) || isset($errors['straat']) || isset($errors['email']) || isset($errors['gemeente']) || isset($errors['tel']) || isset($errors) ? 'has_error' : '' ?>">
                 <legend>Jouw gegevens</legend>
                 <div class="<?= isset($errors['naam']) ? 'has_error' : '' ?>">
                     <label for="naam">Naam</label>
                     <input type="text" name="naam" id="naam" value="<?= $input['naam'] ?>">
                 </div>
                 <?php if (isset($errors['naam'])): ?>
-                    <span class="error"><?= $errors['naam'] ?></span>
+                <span class="error"><?= $errors['naam'] ?></span>
                 <?php endif; ?>
                 <div class="<?= isset($errors['straat']) ? 'has_error' : '' ?>">
                     <label for="straat">Straat + Huisnummer</label>
                     <input type="text" name="straat" id="straat" value="<?= $input['straat'] ?>">
                 </div>
                 <?php if (isset($errors['straat'])): ?>
-                    <span class="error"><?= $errors['straat'] ?></span>
+                <span class="error"><?= $errors['straat'] ?></span>
                 <?php endif; ?>
                 <div class="<?= isset($errors['gemeente']) ? 'has_error' : '' ?>">
                     <label for="gemeente">Postcode + Gemeente</label>
-                    <input type="text" name="gemeente" id="gemeente"  value="<?= $input['gemeente'] ?>">
+                    <input type="text" name="gemeente" id="gemeente" value="<?= $input['gemeente'] ?>">
                 </div>
                 <?php if (isset($errors['gemeente'])): ?>
-                    <span class="error"><?= $errors['gemeente'] ?></span>
+                <span class="error"><?= $errors['gemeente'] ?></span>
                 <?php endif; ?>
                 <div class="<?= isset($errors['email']) ? 'has_error' : '' ?>">
                     <label for="email">E-mailadres</label>
-                    <input type="text" name="email" id="email"  value="<?=$input['email'] ?>">
+                    <input type="text" name="email" id="email" value="<?=$input['email'] ?>">
                 </div>
                 <?php if (isset($errors['email'])): ?>
-                    <span class="error"><?= $errors['email'] ?></span>
+                <span class="error"><?= $errors['email'] ?></span>
                 <?php endif; ?>
                 <div class="<?= isset($errors['tel']) ? 'has_error' : '' ?>">
                     <label for="tel">Telefoonnummer</label>
-                    <input type="text" name="tel" id="tel"  value="<?=$input['tel'] ?>">
+                    <input type="text" name="tel" id="tel" value="<?=$input['tel'] ?>">
                 </div>
                 <?php if (isset($errors['tel'])): ?>
-                    <span class="error"><?= $errors['tel'] ?></span>
+                <span class="error"><?= $errors['tel'] ?></span>
                 <?php endif; ?>
             </fieldset>
 
@@ -277,6 +248,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             Met het plaatsen van een bestelling ga je akkoord met de algemene voorwaarden.
         </footer>
     </div>
-    
+
 </body>
+
 </html>

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Film website</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Film website</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <?php
 $averageScore = 0;
@@ -54,60 +55,62 @@ $totalScore = 0;
   $max_stars = 5;
   $stars = round(($averageScore / 10) * $max_stars);
 ?>
+
 <body>
 
-  <div class="page-intro">
-    <div class="container">
-      <p>Movies</p>
+    <div class="page-intro">
+        <div class="container">
+            <p>Movies</p>
+        </div>
     </div>
-  </div>
 
-  <main>
-    <header class="main-header">
-      <div class="container clearfix">
-        <img class="movie-poster" src="images/poster.jpg" alt="Spider-man: Homecoming" />
-        <div class="score">
-          <?php
+    <main>
+        <header class="main-header">
+            <div class="container clearfix">
+                <img class="movie-poster" src="images/poster.jpg" alt="Spider-man: Homecoming" />
+                <div class="score">
+                    <?php
             for($i = 1; $i <= $stars; $i++){
               echo '<div class="star"></div>';
             }
           ?>
-        </div>
-        <h1 class="movie-title"><?php echo $films['titel'] ?></h1>
-        <p class="movie-synopsis"><?php echo $films['synopsis'] ?></p>
-        <div class="tag-list">
-          <?php 
+                </div>
+                <h1 class="movie-title"><?php echo $films['titel'] ?></h1>
+                <p class="movie-synopsis"><?php echo $films['synopsis'] ?></p>
+                <div class="tag-list">
+                    <?php 
                 $tagsString = implode(', ', $films['tags']);
                 echo '<a class="tag" href="#">' . htmlspecialchars($tagsString) . '</a>';
           ?>
-        </div>
-      </div>
-    </header>
-    <div class="main-content">
-      <div class="container clearfix">
-        <div class="content">
-          <?php
+                </div>
+            </div>
+        </header>
+        <div class="main-content">
+            <div class="container clearfix">
+                <div class="content">
+                    <?php
             if($averageScore >= 8){
               echo '<div class="recommended">
                       This movie is highly recommended!
                     </div>';
             }
           ?>
-          <?php 
+                    <?php 
             echo '<p>'. $films['info'] .'</p>'
           ?>
-          <div class="directors">
-            <p><b>Directors:</b><p>
-            <?php 
+                    <div class="directors">
+                        <p><b>Directors:</b>
+                        <p>
+                            <?php 
             for($i = 0; $i < count($films['Directors']); $i++){
               echo ''. $films['Directors'][$i] . ',';
             }
             ?>
-           
-          </div>
-          <div class="actors">
-            <p><b>Actors:</b></p>
-            <?php
+
+                    </div>
+                    <div class="actors">
+                        <p><b>Actors:</b></p>
+                        <?php
               $actorUpperCaseArray = [];
               $dataPush = "";
               foreach ($films['acteurs'] as $acteur) {
@@ -123,24 +126,24 @@ $totalScore = 0;
             }
             echo '</table>';
             ?>
-          </div>
-          
-          <div class="screenshots">
-            <?php 
+                    </div>
+
+                    <div class="screenshots">
+                        <?php 
               for($i = 0; $i < count($films['images']); $i++){
                 echo '<img src="'. $films['images'][$i] . '">';
               }
             ?>
-          </div>
-        </div>
-        <aside class="reviews">
-          <h1>Reviews</h1>
-          <?php 
+                    </div>
+                </div>
+                <aside class="reviews">
+                    <h1>Reviews</h1>
+                    <?php 
           if ($reviewCount > 0) {
               echo '<p>User score: <b>'. round($averageScore, 1) . '/10</b></p>';
           }
           ?>
-            <?php
+                    <?php
               foreach($films['reviews'] as $review){
                   echo '<article class="review">
                     <header class="review-header"> 
@@ -157,14 +160,15 @@ $totalScore = 0;
                   </article>';
               }
             ?>
-        </aside>
-      </div>
-    </div>
-  </main>
+                </aside>
+            </div>
+        </div>
+    </main>
 
-  <footer class="main-footer">
-    Movies - 2021 &copy; CVO De Verdieping
-  </footer>
-  
+    <footer class="main-footer">
+        Movies - 2021 &copy; CVO De Verdieping
+    </footer>
+
 </body>
+
 </html>
