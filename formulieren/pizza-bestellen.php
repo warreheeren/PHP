@@ -89,6 +89,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         header('Location: success.php');
+
+
+
+        
         exit;
     }
 }
