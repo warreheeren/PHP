@@ -3,7 +3,7 @@ require_once('./db.php');
 
 
 $errors =[];
-$naam = $hotel_id = $beschrijving = $score = '';
+$naam = $hotel_id = $beschrijving = $scor = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     
     $naam = htmlspecialchars(addslashes(trim($_POST['naam'])));
