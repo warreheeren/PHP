@@ -1,63 +1,75 @@
 <div class="font-semibold">Gegevens</div>
 
 <div>
-    <label for="naam">Naam:</label>
-    <p class="text-neutral-500 italic text-sm">Geef jouw naam in</p>
-    <input type="text" id="naam" class="w-full bg-neutral-100 p-2 block">
-    <div class="text-red-500">
-        Naam is verplicht.
+    <div>
+        <label class="text-neutral-500 italic text-sm" for="naam">Naam:</label>
+        <input class="w-full bg-neutral-100 p-2 block" type="text" name="naam" id="naam" value="<?= $naam ?>">
     </div>
+    <?php if (isset($errors['naam'])): ?>
+    <span class="text-red-500 text-sm"><?= $errors['naam'] ?></span>
+    <?php endif; ?>
 </div>
 
 <div>
-    <label for="email">E-mailadres:</label>
-    <p class="text-neutral-500 italic text-sm">Geef jouw e-mailadres in</p>
-    <input type="text" id="email" class="w-full bg-neutral-100 p-2 block">
-    <div class="text-red-500">
-        E-mailadres is verplicht.
+    <div>
+        <label class="text-neutral-500 italic text-sm" for="email">email:</label>
+        <input class="w-full bg-neutral-100 p-2 block" type="text" name="email" id="email" value="<?= $email?>">
     </div>
+    <?php if (isset($errors['email'])): ?>
+    <span class="text-red-500 text-sm"><?= $errors['email'] ?></span>
+    <?php endif; ?>
 </div>
 
 
 <div class="font-semibold">Adres</div>
 
 <div>
-    <label for="straat">Straat + Huisnummer:</label>
-    <p class="text-neutral-500 italic text-sm">Geef je straat en huisnummer/bus in</p>
-    <input type="text" id="straat" class="w-full bg-neutral-100 p-2 block">
-    <div class="text-red-500">
-        Straat is verplicht.
+    <div>
+        <label class="text-neutral-500 italic text-sm" for="adres">Straat + Huisnummer</label>
+        <input class="w-full bg-neutral-100 p-2 block" type="text" name="adres" id="adres" value="<?= $adres?>">
     </div>
+    <?php if (isset($errors['adres'])): ?>
+    <span class="text-red-500 text-sm"><?= $errors['adres'] ?></span>
+    <?php endif; ?>
 </div>
 
 <div>
-    <label for="straat">Gemeente:</label>
-    <p class="text-neutral-500 italic text-sm">Kies je gemeente</p>
-    <select id="gemeente_id" class="w-full bg-neutral-100 p-2 block">
-        <option disabled selected>-- Kies een gemeente</option>
-        <option value="1">3960 - Bree</option>
-        <option value="1">3550 - Heusden-Zolder</option>
-    </select>
-    <div class="text-red-500">
-        Gemeente is verplicht.
+    <div>
+        <div>
+            <label class="text-neutral-500 italic text-sm" for="gemeente">Gemeente</label>
+            <select name="gemeente" id="gemeente" class="w-full bg-neutral-100 p-2 block">
+                <option disabled value="">-- Kies een gemeente</option>
+                <option value="<?= isset($gemeente) && $gemeente == '3960' ? 'selected' : '' ?>">3960 - Bree</option>
+                <option value="3550" <?= isset($gemeente) && $gemeente == '3550' ? 'selected' : '' ?>>3550 -
+                    Heusden-Zolder</option>
+            </select>
+        </div>
+        <?php if (isset($errors['gemeente'])): ?>
+        <span class="text-red-500 text-sm"><?= $errors['gemeente'] ?></span>
+        <?php endif; ?>
     </div>
 </div>
 
 <div class="font-semibold">Bijkomend</div>
 
 <div>
-    <label for="aantal">Aantal:</label>
-    <p class="text-neutral-500 italic text-sm">Hoeveel flesjes wil je bestellen?</p>
-    <input min=1 type="number" id="aantal" class="w-full bg-neutral-100 p-2 block">
-    <div class="text-red-500">
-        Aantal is verplicht.
+    <div>
+        <label class="text-neutral-500 italic text-sm" for="aantal">Aantal</label>
+        <input class="w-full bg-neutral-100 p-2 block" type="text" name="aantal" id="aantal" value="<?= $aantal?>">
     </div>
+    <?php if (isset($errors['aantal'])): ?>
+    <span class="text-red-500 text-sm"><?= $errors['aantal'] ?></span>
+    <?php endif; ?>
 </div>
 
 <div>
-    <input type="checkbox" id="voorwaarden" class="">
-    <label for="aantal">Ik plaats mijn bestelling en ik ga akkoord met de voorwaarden.</label>
-    <div class="text-red-500">
-        Je moet de voorwaarden accepteren.
+    <div>
+        <div>
+            <input name="voorwaarden" type="checkbox" id="voorwaarden" class="" value="<?= $voorwaarden?>">
+            <label for="aantal">Ik plaats mijn bestelling en ik ga akkoord met de voorwaarden.</label>
+        </div>
+        <?php if (isset($errors['voorwaarden'])): ?>
+        <span class="text-red-500 text-sm"><?= $errors['voorwaarden'] ?></span>
+        <?php endif; ?>
     </div>
 </div>

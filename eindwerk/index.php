@@ -41,9 +41,10 @@ $entries = $query->fetchAll();
                                 class="text-blue-500 underline"><?=$entry['brewery_name']?></a></p>
                         <p>Prijs: &euro;<?=$entry['price']?></p>
                     </header>
+
                     <p class="text-orange-500">Nog <?=$entry['stock']?> in stock</p>
                 </div>
-                <p class="mt-2"><a href="bestellen.php?id=1"
+                <p class="mt-2"><a href="bestellen.php?id=<?=$entry['id']?>"
                         class="bg-green-500 text-green-100 px-2 py-1 rounded inline-block">Bestellen!</a></p>
             </div>
             <?php endforeach;?>

@@ -1,21 +1,22 @@
 <?php
 
-if (empty($_POST['naam'])) {
+
+if (empty($naam)) {
     $foutmeldingen['naam'] = 'Naam is verplicht in te vullen.';
 }
 
-if (empty($_POST['beschrijving'])) {
+if (empty($beschrijving)) {
     $foutmeldingen['beschrijving'] = 'Beschrijving is verplicht in te vullen.';
 }
 
-if (empty($_POST['stock'])) {
+if (empty($stock)) {
     $foutmeldingen['stock'] = 'stock is verplicht in te vullen.';
 }
 
-if (empty($_POST['price'])) {
+if (empty($price)) {
     $foutmeldingen['price'] = 'prijs is verplicht in te vullen.';
 }
 
-if (empty($_POST['brouwerij'])) {
+if (empty($brouwerij)) {
     $foutmeldingen['brouwerij'] = 'brouwerij is verplicht te kiezen.';
 }

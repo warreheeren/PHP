@@ -8,7 +8,10 @@ include('./includes/pdo.php');
 $query = $pdo->query('SELECT beers.*, breweries.id AS brewery_id, breweries.name AS brewery_name FROM beers JOIN breweries ON beers.brewery_id=breweries.id');
 $beers = $query->fetchAll();
 
+$breweries = $pdo->query("SELECT * FROM breweries")->fetchAll(PDO::FETCH_ASSOC);;
+
 $foutmeldingen = [];
+$naam = $beschrijving = $stock = $price = $brouwerij = "" ;
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include('./includes/validatie.php');
