@@ -1,5 +1,5 @@
 <?php foreach ($entries as $entry) {
- if ($entry['stock'] < 5) { 
+ if ($entry['stock'] <= 5) { 
     $bestellen[]=$entry; }
 }
 ?>

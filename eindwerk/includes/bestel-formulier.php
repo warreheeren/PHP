@@ -39,7 +39,8 @@
             <label class="text-neutral-500 italic text-sm" for="gemeente">Gemeente</label>
             <select name="gemeente" id="gemeente" class="w-full bg-neutral-100 p-2 block">
                 <option disabled value="">-- Kies een gemeente</option>
-                <option value="<?= isset($gemeente) && $gemeente == '3960' ? 'selected' : '' ?>">3960 - Bree</option>
+                <option value="3960<?= isset($gemeente) && $gemeente == '3960' ? 'selected' : '' ?>">3960 - Bree
+                </option>
                 <option value="3550" <?= isset($gemeente) && $gemeente == '3550' ? 'selected' : '' ?>>3550 -
                     Heusden-Zolder</option>
             </select>

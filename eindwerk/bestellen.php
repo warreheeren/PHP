@@ -51,16 +51,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         ]);
         $customer_id = $pdo->lastInsertId();
-        $stmt = $pdo->prepare("INSERT INTO orders (customer_id, beer_id, quantity) VALUES (:customer_id, :beer_id, :quantity)");
+        $stmt = $pdo->prepare("INSERT INTO orders (date,customer_id, beer_id, quantity, is_done) VALUES (:date,:customer_id, :beer_id, :quantity, :is_done)");
         $stmt->execute([
+            ':date' => date('Y-m-d'),
             ':customer_id' => $customer_id,
             ':beer_id' => $beer['id'],
-            ':quantity' => $aantal
+            ':quantity' => $aantal,
+            ':is_done' => 0
         ]);
-
-        header('Location: index.php');
-        
-        exit;
+       
+        if ($beer['stock'] >= $aantal) {
+            $query = $pdo->prepare("UPDATE beers SET stock = stock - :quantity WHERE id = :id");
+            $query->execute([
+                ':quantity' => $aantal,
+                ':id' => $beer['id']
+            ]);
+            $besteld = true;
+        } else {
+            $errors['stock'] = 'Er is geen voldoende stock om de bestelling te plaatsen.';
+        }
     } 
 }
 ?>
@@ -102,6 +111,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="mt-12">
             <form method="post" class="grid gap-4 max-w-lg">
                 <?php include('./includes/bestel-formulier.php') ?>
+                <?php if (isset($errors['stock'])): ?>
+                <span class="text-red-500 text-sm"><?php echo $errors['stock'] ?></span>
+                <?php endif ?>
                 <div class="flex items-center gap-4">
                     <input type="submit" value="Bestellen maar"
                         class="cursor-pointer p-2 bg-green-500 text-green-100 inline-block">

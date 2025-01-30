@@ -6,12 +6,17 @@ $query->execute([':id' => $_GET['id']]);
 $beer = $query->fetch(PDO::FETCH_ASSOC);
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $query = $pdo->prepare('DELETE FROM beers WHERE id=:id');
+    $query = $pdo->prepare('DELETE FROM orders WHERE beer_id = :id');
     $query->execute([
         'id' => $_GET['id']
     ]);
 
-    header('location:index.php');
+    $query = $pdo->prepare('DELETE FROM beers WHERE id = :id');
+    $query->execute([
+        'id' => $_GET['id']
+    ]);
+
+    header('location: index.php');
     exit;
 }
 ?>
